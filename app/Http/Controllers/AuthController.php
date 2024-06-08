@@ -2,32 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
-        dd('masuks!~');
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentialsx are incorrect.']
-            ]);
+        if (Auth::attempt($credentials)) {
+            $token = $request->user()->createToken('authToken')->plainTextToken;
+            return response()->json(['token' => $token], 200);
         }
 
-        $token = $user->createToken('token-name')->plainTextToken;
-
-        return response()->json(['token' => $token]);
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }
