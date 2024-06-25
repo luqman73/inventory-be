@@ -24,3 +24,4 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [UserController::class, 'register']);
 Route::get('/staff', [UserController::class, 'staff']);
+Route::put('/staff/{id}/deactivate', [UserController::class, 'deactivateStaff']);

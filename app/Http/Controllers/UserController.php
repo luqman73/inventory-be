@@ -9,8 +9,10 @@ class UserController extends Controller
 {
     public function staff()
     {
-        $staff = User::where('role', 'staff')->get();
-
+        $staff = User::where('role', 'staff')
+            ->where('status','active')
+            ->get();
+        
         return response()->json($staff);
     }
 
@@ -30,5 +32,19 @@ class UserController extends Controller
         ]);
 
         return response()->json(['message' => 'Staff registered succesfully!']);
+    }
+
+    public function deactivateStaff($id)
+    {   
+        $user = User::find($id);
+       
+        if (!$user) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+    
+        $user->status = 'inactive';
+        $user->save();
+    
+        return response()->json(['message' => 'User deactivated successfully.']);
     }
 }
