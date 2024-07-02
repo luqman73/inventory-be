@@ -22,6 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 
+// Staff Related Route
+
 Route::post('/register', [UserController::class, 'register']);
 Route::get('/staff', [UserController::class, 'staff']);
+Route::get('/staff/{id}', [UserController::class, 'getStaffById']);
 Route::put('/staff/{id}/deactivate', [UserController::class, 'deactivateStaff']);
+Route::put('/staff/{id}/update', [UserController::class, 'updateStaff']);

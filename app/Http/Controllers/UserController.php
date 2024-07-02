@@ -16,6 +16,17 @@ class UserController extends Controller
         return response()->json($staff);
     }
 
+    public function getStaffById($userId)
+    {
+        $staff = User::find($userId);
+
+        if (!$staff) {
+            return response()->json(['message' => 'Staff not found'], 404);
+        }
+
+        return response()->json($staff);
+    }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -34,9 +45,9 @@ class UserController extends Controller
         return response()->json(['message' => 'Staff registered succesfully!']);
     }
 
-    public function deactivateStaff($id)
+    public function deactivateStaff($userId)
     {   
-        $user = User::find($id);
+        $user = User::find($userId);
        
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
@@ -46,5 +57,21 @@ class UserController extends Controller
         $user->save();
     
         return response()->json(['message' => 'User deactivated successfully.']);
+    }
+
+    public function updateStaff(Request $request)
+    {
+        $request->validate([
+            'userId' => 'required|exists:users,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$request->userId,
+        ]);
+
+        $user = User::find($request->userId);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json(['message' => 'User updated successfully']);
     }
 }
