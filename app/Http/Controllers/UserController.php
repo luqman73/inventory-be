@@ -59,6 +59,20 @@ class UserController extends Controller
         return response()->json(['message' => 'User deactivated successfully.']);
     }
 
+    public function activateStaff($userId)
+    {
+        $user = User::find($userId);
+        
+        if (!$user) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+
+        $user->status = 'active';
+        $user->save();
+
+        return response()->json(['message' => 'User activated sucessfully.']);
+    }
+
     public function updateStaff(Request $request, $userId)
     {
         $request->validate([
