@@ -23,10 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 
 // Staff Related Route
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::post('/register', [UserController::class, 'register']);
-Route::get('/staff', [UserController::class, 'staff']);
-Route::get('/staff/{userId}', [UserController::class, 'getStaffById']);
-Route::put('/staff/{userId}/activate', [UserController::class, 'activateStaff']);
-Route::put('/staff/{userId}/deactivate', [UserController::class, 'deactivateStaff']);
-Route::put('/staff/{userId}/update', [UserController::class, 'updateStaff']);
+    Route::post('/register', [UserController::class, 'register']);
+    Route::get('/staff', [UserController::class, 'staff']);
+    Route::get('/staff/{userId}', [UserController::class, 'getStaffById']);
+    Route::put('/staff/{userId}/activate', [UserController::class, 'activateStaff']);
+    Route::put('/staff/{userId}/deactivate', [UserController::class, 'deactivateStaff']);
+    Route::put('/staff/{userId}/update', [UserController::class, 'updateStaff']);
+});
