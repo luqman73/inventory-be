@@ -37,5 +37,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Product related route
     Route::get('/colors', [ColorController::class, 'index']);
-    Route::post('/colors', [ColorController::class, 'store']);
+    Route::post('/color', [ColorController::class, 'store']);
 });
