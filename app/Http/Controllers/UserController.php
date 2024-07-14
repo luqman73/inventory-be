@@ -42,7 +42,7 @@ class UserController extends Controller
             'role' => 'staff'
         ]);
 
-        return response()->json(['message' => 'Staff registered succesfully!']);
+        return response()->json(['message' => 'Staff registered successfully!']);
     }
 
     public function deactivateStaff($userId)
