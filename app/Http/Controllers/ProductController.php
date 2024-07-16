@@ -28,6 +28,6 @@ class ProductController extends Controller
             'color_id' => $request->color_id
         ]);
 
-        return response()->json(['message' => "Product added succesfully"]);
+        return response()->json(['message' => "Product added successfully"]);
     }
 }
