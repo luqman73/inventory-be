@@ -38,4 +38,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Product related route
     Route::get('/colors', [ColorController::class, 'index']);
     Route::post('/color', [ColorController::class, 'store']);
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/product', [ProductController::class, 'store']);
 });
