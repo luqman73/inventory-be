@@ -9,7 +9,17 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('color')->get();
+
+        $products = $products->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'model_name' => $product->model_name,
+                'storage_capacity' => $product->storage_capacity,
+                'color_name' => $product->color->name,
+            ];
+        });
+
         return response()->json($products);
     }
 
